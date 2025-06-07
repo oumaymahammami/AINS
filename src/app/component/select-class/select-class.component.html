@@ -1,0 +1,21 @@
+<div class="select-class-page">
+  <div class="avatar-container">
+    <img src="assets/images/read.png" alt="User Avatar" class="avatar" />
+  </div>
+
+  <div class="center-container">
+    <h2 class="instruction">الرجاء اختيار القسم الدراسي</h2>
+
+    <div class="class-container">
+      <div
+        class="class-box"
+        *ngFor="let classNumber of classes; let i = index"
+        [ngStyle]="{ 'background-color': colors[i % colors.length] }"
+        (click)="selectClass(classNumber)"
+      >
+        <img [src]="'assets/images/' + classNumber + '.png'" alt="Class {{classNumber}}" />
+        <p>السنة</p>
+      </div>
+    </div>
+  </div>
+</div>
