@@ -1,0 +1,46 @@
+<nav class="navbar">
+  <ul>
+    <li><a routerLink="/">الرئيسية</a></li>
+    <li><a routerLink="/about">من نحن</a></li>
+    <li><a routerLink="/contact">اتصل بنا</a></li>
+  </ul>
+</nav>
+
+<div class="lesson-container2">
+  <div class="lesson-container">
+    <h2 class="lesson-title">{{ title || 'درس' }}</h2>
+
+    <!-- Replaced .board-container with .image-wrapper -->
+    <div class="image-wrapper">
+      <img src="/assets/images/S.png" alt="Board" class="board-image" />
+      <div class="slide-text">
+        {{ slides[currentSlideIndex].text }}
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button
+        class="back-button"
+        (click)="prevSlide()"
+        [disabled]="currentSlideIndex === 0"
+      >
+        العودة ←
+      </button>
+
+      <button
+        class="question-button"
+        (click)="onQuestion()"
+      >
+        سؤال
+      </button>
+
+      <button
+        class="next-button"
+        (click)="nextSlide()"
+        [disabled]="currentSlideIndex === slides.length - 1"
+      >
+        التالي →
+      </button>
+    </div>
+  </div>
+</div>

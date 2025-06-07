@@ -9,6 +9,7 @@ import { SelectSubjectComponent } from './component/select-subject/select-subjec
 import { FinishedComponent } from './component/finished/finished.component';
 import { AboutComponent } from './component/about/about.component';  
 import { ContactUsComponent } from './component/contact-us/contact-us.component';  
+import { LessonBoardComponent } from './component/lesson-board/lesson-board.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,5 +22,6 @@ export const routes: Routes = [
   { path: 'finished', component: FinishedComponent },
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactUsComponent }, 
+  { path: 'lesson', component: LessonBoardComponent }, 
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
