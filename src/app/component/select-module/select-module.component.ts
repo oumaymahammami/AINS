@@ -59,16 +59,37 @@ export class SelectModuleComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.currentMode = params['mode'] || null;
+      const subjectValue = params['subject'] || null;
+
+      if (this.currentMode === 'summary') {
+        // redirect to select-subject page for summary mode
+        this.router.navigate(['/select-subject'], {
+          queryParams: { mode: this.currentMode }
+        });
+        return; // prevent further execution
+      }
+
+      // If subject param present, set selectedSubject accordingly
+      if (subjectValue) {
+        this.selectedSubject = this.subjects.find(s => s.value === subjectValue) || null;
+      }
     });
   }
 
   selectSubject(subject: SubjectOption) {
     this.selectedSubject = subject;
 
-    // If mode is 'summary', go to lesson page with first module
-    if (this.currentMode === 'summary') {
+    if (this.currentMode === 'quiz') {
+      // Stay on the page, just update selectedSubject, so user can select module next
+      // Optionally you could update URL query params to reflect selected subject
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { subject: subject.value, mode: this.currentMode },
+        queryParamsHandling: 'merge'
+      });
+    } else {
+      // For other modes, default to first module and navigate to lesson
       const firstModule = subject.modules[0];
-
       this.router.navigate(['/lesson'], {
         queryParams: {
           subject: subject.value,
@@ -90,7 +111,16 @@ export class SelectModuleComponent implements OnInit {
           mode: this.currentMode
         }
       });
+    } else if (this.currentMode === 'quiz') {
+      this.router.navigate(['/chatbot'], {
+        queryParams: {
+          subject: this.selectedSubject.value,
+          module: module.value,
+          mode: this.currentMode
+        }
+      });
     } else {
+      // Other modes fallback
       this.router.navigate(['/chatbot'], {
         queryParams: {
           subject: this.selectedSubject.value,
@@ -103,5 +133,8 @@ export class SelectModuleComponent implements OnInit {
 
   goBack() {
     this.selectedSubject = null;
+    this.router.navigate(['/select-subject'], {
+      queryParams: { mode: this.currentMode }
+    });
   }
 }
