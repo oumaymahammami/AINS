@@ -22,6 +22,8 @@ export class SelectSubjectComponent {
   constructor(private router: Router) {}
 
   selectSubject(subjectName: string) {
-    this.router.navigate(['/finished']); // Redirect to homepage
+    this.router.navigate(['/select-mode'], {
+      queryParams: { subject: subjectName }
+    });
   }
 }

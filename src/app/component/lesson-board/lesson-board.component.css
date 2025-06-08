@@ -211,3 +211,30 @@
     width: 75%;
   }
 }
+
+.exit-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #FF6F91, #FF9671);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
+  z-index: 10;
+}
+
+.exit-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 111, 145, 0.4);
+}
+
+.exit-button span {
+  font-size: 1.1rem;
+}

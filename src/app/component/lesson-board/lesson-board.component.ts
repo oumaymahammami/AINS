@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 import lessonData from '../../../assets/lesson.json'; // adjust path if needed
 
@@ -16,7 +16,7 @@ export class LessonBoardComponent implements OnInit {
   slides: { number: string; text: string }[] = [];
   currentSlideIndex = 0;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.slides = lessonData.slides.map((slideObj: any) => {
@@ -38,8 +38,12 @@ export class LessonBoardComponent implements OnInit {
     }
   }
   onQuestion(): void {
-    // For example, alert the current slide's question or text
-    alert(`السؤال: ${this.slides[this.currentSlideIndex].text}`);
+    this.router.navigate(['/chatbot'], {
+      queryParams: {
+        mode: 'general',
+        context: this.slides[this.currentSlideIndex].text
+      }
+    });
   }
 
 }
