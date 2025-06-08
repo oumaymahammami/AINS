@@ -12,6 +12,6 @@ import { Router } from '@angular/router';
 export class FinishedComponent {
   goHome() {
     // Redirect to home or desired route
-    window.location.href = '/lesson';
+    window.location.href = '/';
   }
 }
