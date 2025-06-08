@@ -18,6 +18,7 @@
       </div>
     </div>
 
+    <!-- Subject selection -->
     <div *ngIf="!selectedSubject" class="subjects-container">
       <div class="subject-card" *ngFor="let subject of subjects" (click)="selectSubject(subject)">
         <div class="subject-icon">
@@ -27,17 +28,19 @@
       </div>
     </div>
 
-    <div *ngIf="selectedSubject" class="modules-container">
+    <!-- Module selection -->
+    <div *ngIf="selectedSubject && currentMode !== 'summary'" class="modules-container">
       <div class="module-card" *ngFor="let module of selectedSubject.modules" (click)="selectModule(module)">
         <div class="module-icon">
           <img [src]="module.icon" [alt]="'أيقونة ' + module.name" />
         </div>
         <h4>{{module.name}}</h4>
       </div>
+
       <button class="back-button" (click)="goBack()">
         <img src="/assets/images/sent.png" alt="Back" />
         <span>عودة</span>
       </button>
     </div>
   </div>
-</div> 
+</div>
