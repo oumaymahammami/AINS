@@ -18,13 +18,13 @@ export class SelectModeComponent {
   selectMode(mode: string) {
   this.selectedMode = mode;
 
-  if (mode === 'summary') {
-    this.router.navigate(['/lesson']); 
-  } else {
+  if (mode === 'general') {
+    this.router.navigate(['/chatbot'], ); 
+  } 
+  else{
     this.router.navigate(['/select-module'], {
       queryParams: { mode: mode }
     });
-  }
-}
+  }}
 
-} 
+}
