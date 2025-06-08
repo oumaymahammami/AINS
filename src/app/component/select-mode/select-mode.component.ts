@@ -16,9 +16,15 @@ export class SelectModeComponent {
   constructor(private router: Router) {}
 
   selectMode(mode: string) {
-    this.selectedMode = mode;
-    this.router.navigate(['/select-module'], { 
+  this.selectedMode = mode;
+
+  if (mode === 'summary') {
+    this.router.navigate(['/lesson']); 
+  } else {
+    this.router.navigate(['/select-module'], {
       queryParams: { mode: mode }
     });
   }
+}
+
 } 

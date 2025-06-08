@@ -38,7 +38,7 @@ export class LessonBoardComponent implements OnInit {
     }
   }
   onQuestion(): void {
-    this.router.navigate(['/chatbot'], {
+    this.router.navigate(['/select-mode'], {
       queryParams: {
         mode: 'general',
         context: this.slides[this.currentSlideIndex].text

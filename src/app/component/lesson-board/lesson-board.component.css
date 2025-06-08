@@ -238,3 +238,8 @@
 .exit-button span {
   font-size: 1.1rem;
 }
+.question-icon {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
