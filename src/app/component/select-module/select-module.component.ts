@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 
 interface ModuleOption {
   name: string;
@@ -23,7 +23,7 @@ interface SubjectOption {
   templateUrl: './select-module.component.html',
   styleUrls: ['./select-module.component.css']
 })
-export class SelectModuleComponent {
+export class SelectModuleComponent implements OnInit {
   subjects: SubjectOption[] = [
     {
       name: 'أحياء',
@@ -52,39 +52,56 @@ export class SelectModuleComponent {
   ];
 
   selectedSubject: SubjectOption | null = null;
+  currentMode: string | null = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.currentMode = params['mode'] || null;
+    });
+  }
 
   selectSubject(subject: SubjectOption) {
     this.selectedSubject = subject;
+
+    // If mode is 'summary', go to lesson page with first module
+    if (this.currentMode === 'summary') {
+      const firstModule = subject.modules[0];
+
+      this.router.navigate(['/lesson'], {
+        queryParams: {
+          subject: subject.value,
+          module: firstModule.value,
+          mode: this.currentMode
+        }
+      });
+    }
   }
 
   selectModule(module: ModuleOption) {
-    if (this.selectedSubject) {
-      const currentMode = this.router.url.split('mode=')[1]?.split('&')[0];
-      
-      if (currentMode === 'summary') {
-        this.router.navigate(['/lesson'], {
-          queryParams: {
-            subject: this.selectedSubject.value,
-            module: module.value,
-            mode: currentMode
-          }
-        });
-      } else {
-        // For quiz and general modes
-        this.router.navigate(['/chatbot'], {
-          queryParams: {
-            subject: this.selectedSubject.value,
-            module: module.value,
-            mode: currentMode
-          }
-        });
-      }
+    if (!this.selectedSubject || !this.currentMode) return;
+
+    if (this.currentMode === 'summary') {
+      this.router.navigate(['/lesson'], {
+        queryParams: {
+          subject: this.selectedSubject.value,
+          module: module.value,
+          mode: this.currentMode
+        }
+      });
+    } else {
+      this.router.navigate(['/chatbot'], {
+        queryParams: {
+          subject: this.selectedSubject.value,
+          module: module.value,
+          mode: this.currentMode
+        }
+      });
     }
   }
 
   goBack() {
     this.selectedSubject = null;
   }
-} 
+}
